@@ -34,8 +34,7 @@ const eventPubNewYearJob = CronJob.from({
 });
 
 const eventSyncJob = CronJob.from({
-  // cronTime: '0 8 * * 6',
-  cronTime: '*/1 9-23 * * *',
+  cronTime: '0 8 * * 6',
   onTick: eventSync,
   start: false,
   timeZone: timezone,
