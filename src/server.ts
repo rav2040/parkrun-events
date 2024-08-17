@@ -13,7 +13,8 @@ const timezone = Env.get("TZ", true);
 const logger = createLogger("server");
 
 const eventPubStandardJob = CronJob.from({
-  cronTime: '*/5 9-23 * * 6',
+  // cronTime: '*/5 9-23 * * 6',
+  cronTime: '*/5 9-23 * * *',
   onTick: eventPub,
   start: false,
   timeZone: timezone,
