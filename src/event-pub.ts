@@ -1,5 +1,4 @@
 import { get as httpsGet } from "node:https";
-import { join } from "node:path";
 import { DynamoDBClient, ScanCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { load } from "cheerio";
 import Mailjet from "node-mailjet";
@@ -26,7 +25,7 @@ export type ParkrunnerNotificationEvent = {
 
 const SPOOFED_USER_AGENT = "Mozilla/5.0 (Maemo; Linux armv7l; rv:10.0)";
 
-const Env = createEnv({ path: join(__dirname, "../.env") });
+const Env = createEnv();
 
 const logger = createLogger("event-pub");
 
@@ -48,7 +47,7 @@ const mailjet = new Mailjet.Client({
     apiSecret: Env.get("MAILJET_API_KEY_PRIVATE", true),
 });
 
-async function main() {
+export async function eventPub() {
     try {
         const eventQueryResponse = await dynamodb.send(new ScanCommand({
             TableName: "parkrun-events",
@@ -228,5 +227,3 @@ async function sendEmail(recipients: string[], subject: string, htmlMessage: str
             }))
         });
 }
-
-main().catch(logger.error);

@@ -1,20 +1,21 @@
 {
   "name": "parkrun-events",
+  "version": "1.0.0",
+  "author": "Stuart Kennedy",
+  "license": "MIT",
   "scripts": {
-    "build": "esbuild --bundle --platform=node --outdir=out --out-extension:.js=.cjs"
+    "build": "esbuild --bundle --platform=node --outdir=lib --out-extension:.js=.cjs src/server.ts"
   },
   "type": "module",
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.481.0",
-    "@aws-sdk/client-sqs": "^3.484.0",
     "@rav2040/dotenv": "^1.2.1",
-    "aws-lambda": "^1.0.7",
     "cheerio": "^1.0.0-rc.12",
+    "cron": "^3.1.7",
     "node-mailjet": "^6.0.5",
     "winston": "^3.11.0"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.130",
     "@types/node": "^20.10.5",
     "@types/node-mailjet": "^3.3.12",
     "esbuild": "^0.19.11",

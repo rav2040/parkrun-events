@@ -1,5 +1,4 @@
 import { get as httpsGet } from "node:https";
-import { join } from "node:path";
 import { DynamoDBClient, ScanCommand, PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { createEnv } from "@rav2040/dotenv";
 import { createLogger } from "./logger.js";
@@ -8,7 +7,7 @@ const SPOOFED_USER_AGENT = "Mozilla/5.0 (Maemo; Linux armv7l; rv:10.0)";
 
 const logger = createLogger("event-sync");
 
-const Env = createEnv({ path: join(__dirname, "../.env") });
+const Env = createEnv();
 
 const awsClientConfig = {
     region: "ap-southeast-2",
@@ -20,7 +19,7 @@ const awsClientConfig = {
 
 const dynamodb = new DynamoDBClient(awsClientConfig);
 
-async function main() {
+export async function eventSync() {
     try {
         const eventQueryResponse = await dynamodb.send(new ScanCommand({ TableName: "parkrun-events" }));
 
@@ -79,5 +78,3 @@ function getHttpResponseBody(url: string): Promise<string> {
         req.on('error', reject);
     });
 }
-
-main();

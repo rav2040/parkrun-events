@@ -1,10 +1,8 @@
-import type { LambdaFunctionURLEvent } from "aws-lambda";
-
 import { DynamoDBClient, PutItemCommand, DeleteItemCommand } from "@aws-sdk/client-dynamodb";
 import Mailjet from "node-mailjet";
 import { createEnv } from "@rav2040/dotenv";
 
-type MailjetBody = {
+export type MailjetBody = {
     Sender: string;
     Recipient: string;
     Subject: string;
@@ -19,14 +17,7 @@ const mailjet = new Mailjet.Client({
 
 const dynamodb = new DynamoDBClient({});
 
-export async function handler(event: LambdaFunctionURLEvent) {
-    if (!event.body) {
-        console.error("Event body is undefined.")
-        return;
-    }
-
-    const body: MailjetBody = JSON.parse(event.body);
-
+export async function subscriptionHandler(body: MailjetBody) {
     const command = body.Recipient.slice(0, body.Recipient.indexOf("@")).toLowerCase();
     const parkrunnerIds = body.Subject.split(",").map((str) => str.replace(/[^0-9]/gi, "")).filter(Boolean);
 
@@ -91,7 +82,7 @@ export async function handler(event: LambdaFunctionURLEvent) {
         return;
     }
 
-    console.log(`Command '${command}' is not recognised. Event: ${JSON.stringify(event, null, 2)}`);
+    console.log(`Command '${command}' is not recognised. Event: ${JSON.stringify(body, null, 2)}`);
 }
 
 function sendEmail(recipients: string[], subject: string, htmlMessage: string) {

@@ -12,5 +12,5 @@
 #!.yarn/cache
 .pnp.*
 node_modules
-out
+lib
 .env
