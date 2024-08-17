@@ -1,11 +1,9 @@
 FROM node:20-alpine
 
-WORKDIR /usr/src/app
-
 USER node
 
-COPY lib/server.cjs .
+COPY lib/server.cjs /usr/src/app/lib/server.cjs
 
 EXPOSE 3000
 
-CMD node lib/server.cjs
+CMD node /usr/src/app/lib/server.cjs
