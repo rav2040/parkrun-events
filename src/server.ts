@@ -13,8 +13,7 @@ const timezone = Env.get("TZ", true);
 const logger = createLogger("server");
 
 const eventPubStandardJob = CronJob.from({
-  // cronTime: '*/5 9-23 * * 6',
-  cronTime: '*/5 9-23 * * *',
+  cronTime: '*/5 9-23 * * 6',
   onTick: eventPub,
   start: false,
   timeZone: timezone,
@@ -35,7 +34,8 @@ const eventPubNewYearJob = CronJob.from({
 });
 
 const eventSyncJob = CronJob.from({
-  cronTime: '0 8 * * 6',
+  // cronTime: '0 8 * * 6',
+  cronTime: '*/1 9-23 * * *',
   onTick: eventSync,
   start: false,
   timeZone: timezone,
@@ -69,7 +69,7 @@ createServer((request, response) => {
       });
   })
   .listen(3000, () => {
-    logger.info("Server is now listenting on port 3000.");
+    logger.info("Server is listenting on port 3000.");
   });
 
 eventPubStandardJob.start();
