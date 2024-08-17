@@ -67,9 +67,13 @@ createServer((request, response) => {
         });
       });
   })
-  .listen(3000);
+  .listen(3000, () => {
+    logger.info("Server is now listenting on port 3000.");
+  });
 
 eventPubStandardJob.start();
 eventPubChristmasJob.start();
 eventPubNewYearJob.start();
 eventSyncJob.start();
+
+logger.info("Cron jobs have started.");
