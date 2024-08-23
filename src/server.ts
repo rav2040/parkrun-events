@@ -5,6 +5,7 @@ import { subscriptionHandler, type MailjetBody } from './subscription-handler.js
 import { eventPub } from './event-pub.js';
 import { eventSync } from './event-sync.js';
 import { createLogger } from "./logger.js";
+import cronSchedule from "../cron-schedule.json";
 
 const Env = createEnv();
 
@@ -13,28 +14,28 @@ const timezone = Env.get("TZ", true);
 const logger = createLogger("server");
 
 const eventPubStandardJob = CronJob.from({
-  cronTime: '*/5 9-23 * * 6',
+  cronTime: cronSchedule.eventPubStandardJob,
   onTick: eventPub,
   start: false,
   timeZone: timezone,
 });
 
 const eventPubChristmasJob = CronJob.from({
-  cronTime: '*/5 9-23 25 12 *',
+  cronTime: cronSchedule.eventPubChristmasJob,
   onTick: eventPub,
   start: false,
   timeZone: timezone,
 });
 
 const eventPubNewYearJob = CronJob.from({
-  cronTime: '*/5 9-23 1 1 *',
+  cronTime: cronSchedule.eventPubNewYearJob,
   onTick: eventPub,
   start: false,
   timeZone: timezone,
 });
 
 const eventSyncJob = CronJob.from({
-  cronTime: '0 8 * * 6',
+  cronTime: cronSchedule.eventSyncJob,
   onTick: eventSync,
   start: false,
   timeZone: timezone,

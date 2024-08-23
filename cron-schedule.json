@@ -1,0 +1,6 @@
+{
+    "eventPubStandardJob": "*/5 8-23 * * 6",
+    "eventPubChristmasJob": "*/5 8-23 25 12 *",
+    "eventPubNewYearJob": "*/5 8-23 1 1 *",
+    "eventSyncJob": "0 8 * * 6"
+}
