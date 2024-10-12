@@ -29,9 +29,6 @@ const Env = createEnv();
 
 const logger = createLogger("event-pub");
 
-const t = new Date();
-const currentDate = new Date(t.getFullYear(), t.getMonth(), t.getDate());
-
 const awsClientConfig = {
     region: "ap-southeast-2",
     credentials: {
@@ -49,6 +46,9 @@ const mailjet = new Mailjet.Client({
 
 export async function eventPub() {
     try {
+        const t = new Date();
+        const currentDate = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+
         const eventQueryResponse = await dynamodb.send(new ScanCommand({
             TableName: "parkrun-events",
             ExpressionAttributeValues: {
