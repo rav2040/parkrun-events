@@ -47,19 +47,15 @@ const mailjet = new Mailjet.Client({
 export async function eventPub() {
     try {
         const t = new Date();
-        const currentDate = new Date(t.getFullYear(), t.getMonth(), t.getDate());
 
         const eventQueryResponse = await dynamodb.send(new ScanCommand({
             TableName: "parkrun-events",
             ExpressionAttributeValues: {
                 ":v1": {
-                    N: currentDate.valueOf().toString(),
-                },
-                ":v2": {
                     BOOL: true,
                 },
             },
-            FilterExpression: "last_modified < :v1 AND is_deleted <> :v2",
+            FilterExpression: "is_deleted <> :v1",
             ProjectionExpression: "event_id,display_name,next_run_number",
         }));
 
